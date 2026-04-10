@@ -1,7 +1,4 @@
-# TimeLens Video Demo Guide
-
-This guide is for the final 2-minute demonstration video.
-
+# TimeLens
 ## 1. Run the prototype
 
 ```bash
