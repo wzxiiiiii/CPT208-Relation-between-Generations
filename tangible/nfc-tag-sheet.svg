@@ -1,0 +1,39 @@
+<svg width="1200" height="800" viewBox="0 0 1200 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="800" fill="#F7F8FC"/>
+  <rect x="48" y="48" width="1104" height="704" rx="40" fill="white" stroke="#D9E0F0" stroke-width="4"/>
+
+  <text x="96" y="122" fill="#1E293B" font-family="Arial, sans-serif" font-size="42" font-weight="700">TimeLens NFC Demo Cards</text>
+  <text x="96" y="160" fill="#64748B" font-family="Arial, sans-serif" font-size="22">Print this sheet, place one NFC sticker inside each circle, and put the card beside the matching keepsake.</text>
+
+  <g transform="translate(96 220)">
+    <rect width="470" height="458" rx="32" fill="#F8FAFF" stroke="#D8E2FF" stroke-width="3"/>
+    <text x="36" y="56" fill="#4F46E5" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">MEMORY 01</text>
+    <text x="36" y="104" fill="#0F172A" font-family="Arial, sans-serif" font-size="40" font-weight="700">Grandfather's Pocket Watch</text>
+    <text x="36" y="144" fill="#64748B" font-family="Arial, sans-serif" font-size="24">1985 · Grandparent</text>
+
+    <circle cx="235" cy="280" r="116" fill="#EEF2FF" stroke="#C7D2FE" stroke-width="4" stroke-dasharray="10 10"/>
+    <text x="185" y="254" fill="#4F46E5" font-family="Arial, sans-serif" font-size="24" font-weight="700">PLACE NFC</text>
+    <text x="190" y="286" fill="#4F46E5" font-family="Arial, sans-serif" font-size="24" font-weight="700">STICKER</text>
+    <text x="179" y="318" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Tap phone here</text>
+
+    <text x="36" y="390" fill="#475569" font-family="Arial, sans-serif" font-size="22">Suggested prop: pocket watch</text>
+    <text x="36" y="426" fill="#475569" font-family="Arial, sans-serif" font-size="22">Demo path: NFC tap -> memory -> dialogue</text>
+  </g>
+
+  <g transform="translate(634 220)">
+    <rect width="470" height="458" rx="32" fill="#FFF9F6" stroke="#FED7AA" stroke-width="3"/>
+    <text x="36" y="56" fill="#EA580C" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3">MEMORY 02</text>
+    <text x="36" y="104" fill="#0F172A" font-family="Arial, sans-serif" font-size="40" font-weight="700">Faded Family Photo</text>
+    <text x="36" y="144" fill="#64748B" font-family="Arial, sans-serif" font-size="24">1992 · Grandparent</text>
+
+    <circle cx="235" cy="280" r="116" fill="#FFF1E8" stroke="#FDBA74" stroke-width="4" stroke-dasharray="10 10"/>
+    <text x="185" y="254" fill="#EA580C" font-family="Arial, sans-serif" font-size="24" font-weight="700">PLACE NFC</text>
+    <text x="190" y="286" fill="#EA580C" font-family="Arial, sans-serif" font-size="24" font-weight="700">STICKER</text>
+    <text x="179" y="318" fill="#64748B" font-family="Arial, sans-serif" font-size="18">Tap phone here</text>
+
+    <text x="36" y="390" fill="#475569" font-family="Arial, sans-serif" font-size="22">Suggested prop: printed photo</text>
+    <text x="36" y="426" fill="#475569" font-family="Arial, sans-serif" font-size="22">Demo path: NFC tap -> memory -> map</text>
+  </g>
+
+  <text x="96" y="726" fill="#64748B" font-family="Arial, sans-serif" font-size="20">Tip: use Android Chrome for live Web NFC if available; otherwise demonstrate with the built-in fallback button.</text>
+</svg>

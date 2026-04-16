@@ -1,0 +1,62 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#F8FAFC"/>
+  <text x="120" y="110" fill="#0F172A" font-size="52" font-family="Inter, Arial, sans-serif" font-weight="700">TimeLens Tangible Tag Sheet</text>
+  <text x="120" y="160" fill="#475569" font-size="24" font-family="Inter, Arial, sans-serif">Print, cut, and attach these tags to physical props for the Week 8 demo</text>
+
+  <g transform="translate(120 230)">
+    <rect width="620" height="520" rx="28" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3"/>
+    <text x="40" y="72" fill="#4338CA" font-size="26" font-family="Inter, Arial, sans-serif" font-weight="700">Memory Tag 01</text>
+    <text x="40" y="126" fill="#0F172A" font-size="42" font-family="Inter, Arial, sans-serif" font-weight="700">祖父的怀表</text>
+    <text x="40" y="170" fill="#64748B" font-size="24" font-family="Inter, Arial, sans-serif">Memory ID: watch_1985</text>
+    <rect x="40" y="220" width="240" height="240" rx="16" fill="#0F172A"/>
+    <rect x="68" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <text x="330" y="270" fill="#0F172A" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">Suggested prop</text>
+    <text x="330" y="314" fill="#475569" font-size="22" font-family="Inter, Arial, sans-serif">Pocket watch</text>
+    <text x="330" y="354" fill="#475569" font-size="22" font-family="Inter, Arial, sans-serif">or small keepsake</text>
+    <text x="330" y="420" fill="#0F172A" font-size="24" font-family="Inter, Arial, sans-serif" font-weight="700">Demo target</text>
+    <text x="330" y="456" fill="#64748B" font-size="20" font-family="Inter, Arial, sans-serif">Use a live deployed URL when ready</text>
+    <text x="330" y="488" fill="#4338CA" font-size="18" font-family="Inter, Arial, sans-serif">/ ?demo=memory &amp; memory=watch_1985</text>
+  </g>
+
+  <g transform="translate(860 230)">
+    <rect width="620" height="520" rx="28" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="3"/>
+    <text x="40" y="72" fill="#D97706" font-size="26" font-family="Inter, Arial, sans-serif" font-weight="700">Memory Tag 02</text>
+    <text x="40" y="126" fill="#0F172A" font-size="42" font-family="Inter, Arial, sans-serif" font-weight="700">褪色的老相片</text>
+    <text x="40" y="170" fill="#64748B" font-size="24" font-family="Inter, Arial, sans-serif">Memory ID: photo_1992</text>
+    <rect x="40" y="220" width="240" height="240" rx="16" fill="#0F172A"/>
+    <rect x="68" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="248" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="288" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="188" y="328" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="68" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="108" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <rect x="148" y="368" width="32" height="32" fill="#FFFFFF"/>
+    <text x="330" y="270" fill="#0F172A" font-size="28" font-family="Inter, Arial, sans-serif" font-weight="700">Suggested prop</text>
+    <text x="330" y="314" fill="#475569" font-size="22" font-family="Inter, Arial, sans-serif">Printed old photo</text>
+    <text x="330" y="354" fill="#475569" font-size="22" font-family="Inter, Arial, sans-serif">or postcard</text>
+    <text x="330" y="420" fill="#0F172A" font-size="24" font-family="Inter, Arial, sans-serif" font-weight="700">Demo target</text>
+    <text x="330" y="456" fill="#64748B" font-size="20" font-family="Inter, Arial, sans-serif">Use a live deployed URL when ready</text>
+    <text x="330" y="488" fill="#D97706" font-size="18" font-family="Inter, Arial, sans-serif">/ ?demo=memory &amp; memory=photo_1992</text>
+  </g>
+
+  <text x="120" y="830" fill="#64748B" font-size="22" font-family="Inter, Arial, sans-serif">For a stronger tangible demo: print this sheet on sticker paper, attach to props, and point the audience from object to phone screen.</text>
+</svg>
