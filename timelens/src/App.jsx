@@ -42,7 +42,7 @@ const DEMO_MESSAGES = [
   }
 ];
 
-const EMPTY_ENTRY = { title: '', story: '', year: '2024' };
+const EMPTY_ENTRY = { title: '', story: '', year: '2024', color: '#6366f1' }; // 默认为蓝紫色
 
 const VIDEO_CREATE_ENTRY = {
   title: "Grandma's Sewing Box",
@@ -445,39 +445,50 @@ function HighEndHeirloom({ data }) {
     const t = state.clock.getElapsedTime();
     if (groupRef.current) {
       groupRef.current.rotation.y = Math.sin(t / 4) / 4;
+      groupRef.current.rotation.z = Math.sin(t / 2) / 10; // 增加 z 轴微动，更显灵动
       groupRef.current.position.y = Math.sin(t / 1.5) / 10;
     }
   });
 
   return (
     <group ref={groupRef}>
-      {/* 1. 外层金色金属环 (模拟高级外壳) */}
+      {/* 1. 外层金色金属环 (模拟高级外壳) - 升级为 MeshPhysicalMaterial */}
       <mesh castShadow>
-        <torusGeometry args={[1.2, 0.05, 16, 100]} />
-        <meshStandardMaterial color="#D4AF37" metalness={1} roughness={0.05} />
+        <torusGeometry args={[1.2, 0.06, 24, 100]} />
+        <meshPhysicalMaterial 
+          color="#D4AF37" 
+          metalness={1} 
+          roughness={0.1} 
+          clearcoat={1} 
+          clearcoatRoughness={0.1} 
+        />
       </mesh>
 
-      {/* 2. 内部多面体核心 (发光记忆体) */}
-      <Float speed={2} rotationIntensity={1} floatIntensity={1}>
+      {/* 2. 内部多面体核心 (发光记忆体) - 优化发光和质感 */}
+      <Float speed={2.5} rotationIntensity={1.2} floatIntensity={1.2}>
         <mesh castShadow>
           <octahedronGeometry args={[0.8, 0]} />
           <MeshDistortMaterial
             color={data.color || "#FFD700"}
-            speed={3}
-            distort={0.2}
+            speed={4}
+            distort={0.3}
             radius={1}
-            metalness={1}
-            roughness={0.1}
+            metalness={0.9}
+            roughness={0.05}
             emissive={data.color || "#FFD700"}
-            emissiveIntensity={0.6}
+            emissiveIntensity={0.8}
           />
         </mesh>
       </Float>
 
-      {/* 3. 辅助装饰环 (增加精密感) */}
+      {/* 3. 辅助装饰环 (增加精密感) - 增加细节 */}
       <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.95, 1.0, 64]} />
+        <ringGeometry args={[0.9, 1.05, 64]} />
         <meshStandardMaterial color="#B8860B" metalness={1} transparent opacity={0.6} />
+      </mesh>
+      <mesh rotation={[0, Math.PI / 2, 0]}>
+        <ringGeometry args={[1.25, 1.3, 64]} />
+        <meshStandardMaterial color="#D4AF37" metalness={1} transparent opacity={0.3} />
       </mesh>
 
       {/* 4. 浮动故事卡片：优化了比例适配 10:19.5 屏幕 */}
@@ -628,7 +639,7 @@ function NfcToolsModal({ memories, onDetected, onClose }) {
         stopScanning();
         onDetected(memoryId);
       };
-    } catch (nfcError) {
+    } catch {
       setError('Unable to start NFC scanning. Make sure NFC is enabled and use a supported mobile browser.');
       stopScanning();
     }
@@ -648,7 +659,7 @@ function NfcToolsModal({ memories, onDetected, onClose }) {
       const writer = new window.NDEFReader();
       await writer.write(buildMemoryNfcWriteMessage(memory.id));
       setStatus(`NFC tag written for ${memory.title}. You can now tap it to open the memory.`);
-    } catch (nfcError) {
+    } catch {
       setError('Failed to write the NFC tag. Use a writable NDEF tag and keep NFC enabled on the phone.');
     } finally {
       setWritingId('');
@@ -781,17 +792,44 @@ export default function App() {
   const [showMessages, setShowMessages] = useState(initialVideoState ? initialVideoState.showMessages : DEMO_CONFIG.enabled ? DEMO_CONFIG.showMessages : false);
   const [selectedScanId, setSelectedScanId] = useState(initialVideoState ? initialVideoState.activeId : DEMO_CONFIG.enabled ? DEMO_CONFIG.activeId || 'watch_1985' : 'watch_1985');
   const [nfcToolsOpen, setNfcToolsOpen] = useState(INITIAL_OVERLAY_PANEL === 'nfc');
+  const [pendingTagId, setPendingTagId] = useState(null); // 新增：保存扫描到的未识别标签 ID
   const [videoSceneKey, setVideoSceneKey] = useState(DEMO_CONFIG.video ? DEMO_CONFIG.scene : null);
   const [videoAutoPlay, setVideoAutoPlay] = useState(Boolean(DEMO_CONFIG.video && DEMO_CONFIG.autoplay));
   const [videoCaptionsVisible, setVideoCaptionsVisible] = useState(DEMO_CONFIG.video ? DEMO_CONFIG.captionsVisible : false);
   const [toast, setToast] = useState('');
   const toastTimerRef = useRef();
+
   const activeVideoScene = videoSceneKey ? VIDEO_SCENE_LOOKUP[videoSceneKey] || VIDEO_SCENE_LOOKUP.cover : null;
   const videoSceneIndex = activeVideoScene ? VIDEO_SCENES.findIndex((scene) => scene.key === activeVideoScene.key) : -1;
   const memoryList = Object.values(memories);
   const selectedMemory = memories[selectedScanId] || memoryList[0];
   const unlockedCount = memoryList.filter((memory) => memory.unlocked).length;
   const lockedCount = memoryList.length - unlockedCount;
+
+  const showToast = (message) => {
+    if (toastTimerRef.current) {
+      clearTimeout(toastTimerRef.current);
+    }
+    setToast(message);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast('');
+    }, 2200);
+  };
+
+  const triggerHapticSuccess = () => {
+    // 物理反馈：震动 (Member B - 硬件优化)
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate([100, 50, 100]);
+    }
+    // 听觉反馈：扫描成功提示音 (Member B - 硬件优化)
+    try {
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3');
+      audio.volume = 0.4;
+      audio.play().catch(() => {});
+    } catch {
+      // 忽略音频播放错误
+    }
+  };
 
   // Load from LocalStorage on mount
   useEffect(() => {
@@ -806,7 +844,7 @@ export default function App() {
         const parsed = JSON.parse(saved);
         const merged = hydrateSavedMemories(parsed);
         setMemories(merged);
-      } catch (e) {
+      } catch {
         console.log('Failed to parse saved memories');
       }
     }
@@ -954,20 +992,12 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const showToast = (message) => {
-    if (toastTimerRef.current) {
-      clearTimeout(toastTimerRef.current);
-    }
-    setToast(message);
-    toastTimerRef.current = window.setTimeout(() => {
-      setToast('');
-    }, 2200);
-  };
 
   const handleSimulateScan = (targetId = selectedScanId) => {
     if (!targetId || !memories[targetId]) return;
     setView('scanning');
     setTimeout(() => {
+      triggerHapticSuccess(); // 触发触感和声效反馈
       const idToUnlock = targetId;
       setMemories(prev => ({
         ...prev,
@@ -985,24 +1015,31 @@ export default function App() {
   const handleSimulateWrite = (e) => {
     e?.preventDefault?.();
     if (!newEntry.title) return;
-    const newId = `custom_${Date.now()}`;
+    
+    // 如果是从扫描跳转过来的，优先使用物理标签 ID
+    const newId = pendingTagId || `custom_${Date.now()}`;
+    
     setMemories(prev => ({
       ...prev,
       [newId]: { 
         ...newEntry, 
         id: newId, 
         unlocked: true, 
-        color: "#a855f7",
+        color: newEntry.color || "#a855f7",
         author: currentUser,
         messages: []
       }
     }));
-    showToast(`Memory saved. ${currentUser === 'grandchild' ? 'Grandparents can now view your story.' : 'The younger generation can now receive this memory.'}`);
+    
+    showToast(`${pendingTagId ? 'Physical object linked!' : 'Memory saved.'} ${currentUser === 'grandchild' ? 'Grandparents can now view your story.' : 'The younger generation can now receive this memory.'}`);
+    
     setNewEntry({ ...EMPTY_ENTRY });
+    setPendingTagId(null); // 清除挂起的标签
     setSelectedScanId(newId);
     setActiveId(newId);
     setShowMessages(false);
     setView('memory');
+    
     if (DEMO_CONFIG.video && videoSceneKey === 'create') {
       setVideoSceneKey('impact');
     }
@@ -1064,9 +1101,25 @@ export default function App() {
 
   const handleDetectedScan = (memoryId) => {
     setNfcToolsOpen(false);
-    setSelectedScanId(memoryId);
-    showToast(`NFC tag detected: ${memories[memoryId].title}`);
-    handleSimulateScan(memoryId);
+    
+    // 如果是已知记忆，直接打开
+    if (memories[memoryId]) {
+      setSelectedScanId(memoryId);
+      showToast(`Recognized: ${memories[memoryId].title}`);
+      handleSimulateScan(memoryId);
+      return;
+    }
+
+    // 如果是未知标签，引导创建 (Member B 核心需求：扫描即录入)
+    setPendingTagId(memoryId);
+    triggerHapticSuccess(); // 使用特殊的声音和震动提示
+    
+    if (window.confirm(`Discovered an unknown family object (ID: ${memoryId}). Would you like to record a new story for it?`)) {
+      setNewEntry({ ...EMPTY_ENTRY, title: `Memory of ${memoryId.slice(0, 8)}` });
+      setView('create');
+    } else {
+      setPendingTagId(null);
+    }
   };
 
   const stepVideoScene = (direction) => {
@@ -1476,6 +1529,20 @@ export default function App() {
                 <div>
                   <label className="mb-3 block px-3 text-[8px] font-black uppercase tracking-[0.3em] text-slate-300">The story</label>
                   <textarea rows="4" value={newEntry.story} onChange={e => setNewEntry({...newEntry, story: e.target.value})} className="w-full resize-none rounded-[2rem] border-2 border-slate-100 bg-white p-5 text-sm outline-none transition-all shadow-sm focus:border-indigo-500" placeholder="Write a short family story behind this keepsake..." />
+                </div>
+                <div>
+                  <label className="mb-3 block px-3 text-[8px] font-black uppercase tracking-[0.3em] text-slate-300">Memory Aura Color</label>
+                  <div className="flex flex-wrap gap-3 px-2">
+                    {['#6366f1', '#f59e0b', '#10b981', '#ef4444', '#a855f7'].map(color => (
+                      <button
+                        key={color}
+                        type="button"
+                        onClick={() => setNewEntry({...newEntry, color})}
+                        className={`w-8 h-8 rounded-full border-2 transition-all ${newEntry.color === color ? 'border-slate-900 scale-125' : 'border-transparent opacity-60'}`}
+                        style={{ backgroundColor: color }}
+                      />
+                    ))}
+                  </div>
                 </div>
                 <button type="submit" className="mt-4 w-full rounded-[2.5rem] bg-slate-900 py-5 text-[10px] font-black uppercase tracking-[0.3em] text-white shadow-2xl transition-all active:scale-[0.98]">
                   <Save size={18} className="mr-2 inline" /> Save memory
